@@ -11,14 +11,29 @@
         <!--Journal-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="JRNL" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="JournalListViewController" customModule="JRNL" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="6jL-TS-fFk">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="6jL-TS-fFk" secondAttribute="bottom" id="aR6-RZ-fwn"/>
+                            <constraint firstItem="6jL-TS-fFk" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="esH-74-bQu"/>
+                            <constraint firstItem="6jL-TS-fFk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="jcg-Ya-Vu5"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6jL-TS-fFk" secondAttribute="trailing" id="lcb-02-A8i"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Journal" id="zuw-hV-6pI"/>
+                    <connections>
+                        <outlet property="tableView" destination="6jL-TS-fFk" id="PJa-7M-vIX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
