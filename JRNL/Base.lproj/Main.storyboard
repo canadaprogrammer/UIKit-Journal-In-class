@@ -176,6 +176,11 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="Bic-hn-tmc"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="bodyTextView" destination="FSa-G0-Mie" id="ipp-iZ-1W1"/>
+                        <outlet property="photoImageView" destination="ADd-JN-K3G" id="EvY-RO-0ZY"/>
+                        <outlet property="titleTextField" destination="y5x-lU-8LG" id="vZx-L6-v6e"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LiV-YP-B5C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="eww-Xj-D84" userLabel="Exit" sceneMemberID="exit"/>
