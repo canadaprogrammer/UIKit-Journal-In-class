@@ -50,7 +50,7 @@ struct SampleJournalEntryData {
             fatalError("Unable to instantiate journalEntry2")
         }
         guard let journalEntry3 = JournalEntry(rating: 3, title: "Ok",
-                                               body: "Today is Ok day", photo: photo1) else {
+                                               body: "Today is Ok day", photo: photo3) else {
             fatalError("Unable to instantiate journalEntry3")
         }
         
