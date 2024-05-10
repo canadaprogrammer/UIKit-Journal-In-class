@@ -219,10 +219,10 @@
             </objects>
             <point key="canvasLocation" x="1939.6946564885495" y="713.38028169014092"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Journal Entry Detail View Controller-->
         <scene sceneID="plx-7k-a73">
             <objects>
-                <tableViewController id="xx1-0d-BGn" sceneMemberID="viewController">
+                <tableViewController id="xx1-0d-BGn" customClass="JournalEntryDetailViewController" customModule="JRNL" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="peM-Uv-s8G">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -376,6 +376,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="8M4-cW-mOy"/>
+                    <connections>
+                        <outlet property="bodyTextView" destination="efB-Iz-jvh" id="E1X-nU-co5"/>
+                        <outlet property="dateLabel" destination="lSQ-aL-EEz" id="ydg-2W-cQW"/>
+                        <outlet property="photoImageView" destination="xGg-HL-BPt" id="oO0-1R-5Zp"/>
+                        <outlet property="titleLabel" destination="24j-JC-8o2" id="Llm-eX-hmM"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GwD-wa-0Nb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
