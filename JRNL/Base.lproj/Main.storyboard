@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="journalCell" id="hKC-st-sLa">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="journalCell" id="hKC-st-sLa" customClass="JournalListTableViewCell" customModule="JRNL" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="375" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hKC-st-sLa" id="zMR-TJ-4ES">
@@ -60,7 +60,10 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="xx1-0d-BGn" kind="show" id="gqf-gF-DKn"/>
+                                            <outlet property="dateLabel" destination="CrZ-oz-oOc" id="OGE-Vd-Kbo"/>
+                                            <outlet property="photoImageView" destination="i9k-nB-UVh" id="Hrd-De-WpK"/>
+                                            <outlet property="titleLabel" destination="gxE-v3-sdq" id="qyk-QH-m3m"/>
+                                            <segue destination="xx1-0d-BGn" kind="show" id="50J-oV-f8D"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -344,6 +347,8 @@
                                             <constraints>
                                                 <constraint firstItem="DaB-tS-co5" firstAttribute="centerY" secondItem="Eqa-xU-vVL" secondAttribute="centerY" id="IYE-rJ-qCv"/>
                                                 <constraint firstItem="DaB-tS-co5" firstAttribute="centerX" secondItem="Eqa-xU-vVL" secondAttribute="centerX" id="MU1-04-xgD"/>
+                                                <constraint firstItem="DaB-tS-co5" firstAttribute="centerX" secondItem="Eqa-xU-vVL" secondAttribute="centerX" id="rqe-rl-uLx"/>
+                                                <constraint firstItem="DaB-tS-co5" firstAttribute="centerY" secondItem="Eqa-xU-vVL" secondAttribute="centerY" id="yJk-7b-CMK"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
