@@ -12,7 +12,6 @@ class AddJournalEntryViewController: UIViewController, UITextFieldDelegate, UITe
     @IBOutlet var titleTextField: UITextField!
     @IBOutlet var bodyTextView: UITextView!
     @IBOutlet var photoImageView: UIImageView!
-    
     @IBOutlet var saveButton: UIBarButtonItem!
     
     var newJournalEntry: JournalEntry?
@@ -45,6 +44,11 @@ class AddJournalEntryViewController: UIViewController, UITextFieldDelegate, UITe
         return true
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        updateSaveButtonState()
+        return true
+    }
+        
     func textFieldDidEndEditing(_ textField: UITextField) {
         updateSaveButtonState()
     }
@@ -56,6 +60,7 @@ class AddJournalEntryViewController: UIViewController, UITextFieldDelegate, UITe
         if(text == "\n") {
             textView.resignFirstResponder()
         }
+        updateSaveButtonState()
         return true
     }
     

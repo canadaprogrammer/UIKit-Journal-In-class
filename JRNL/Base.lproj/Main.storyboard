@@ -141,7 +141,6 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="128" id="08l-aK-K61"/>
                                         </constraints>
-                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                         <color key="textColor" systemColor="labelColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -183,6 +182,7 @@
                     <connections>
                         <outlet property="bodyTextView" destination="FSa-G0-Mie" id="ipp-iZ-1W1"/>
                         <outlet property="photoImageView" destination="ADd-JN-K3G" id="EvY-RO-0ZY"/>
+                        <outlet property="saveButton" destination="Bic-hn-tmc" id="8Jr-mx-wbd"/>
                         <outlet property="titleTextField" destination="y5x-lU-8LG" id="vZx-L6-v6e"/>
                     </connections>
                 </viewController>
@@ -345,7 +345,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="316"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="map" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="A1W-Rw-cTq">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="map" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="A1W-Rw-cTq">
                                                     <rect key="frame" x="37.5" y="8.5" width="300" height="298.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="300" id="0qa-30-7sT"/>
