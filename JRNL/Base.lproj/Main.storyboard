@@ -174,7 +174,11 @@
                                 <segue destination="eww-Xj-D84" kind="unwind" unwindAction="unwindNewEntryCancelWithSegue:" id="utC-4P-egL"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="Bic-hn-tmc"/>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="Bic-hn-tmc">
+                            <connections>
+                                <segue destination="eww-Xj-D84" kind="unwind" unwindAction="unwindNewEntrySaveWithSegue:" id="3il-Fl-9na"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="bodyTextView" destination="FSa-G0-Mie" id="ipp-iZ-1W1"/>
