@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddJournalEntryViewController: UIViewController {
+class AddJournalEntryViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
 
     @IBOutlet var titleTextField: UITextField!
     @IBOutlet var bodyTextView: UITextView!
@@ -17,14 +17,14 @@ class AddJournalEntryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        titleTextField.delegate = self
+        bodyTextView.delegate = self
         // Do any additional setup after loading the view.
     }
     
 
     
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
@@ -37,4 +37,18 @@ class AddJournalEntryViewController: UIViewController {
                                        body: body, photo: photo)
     }
 
+    // MARK: -UITextFieldDelegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // MARK: - UITextViewDelegate
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange,
+                  replacementText text: String) -> Bool {
+        if(text == "\n") {
+            textView.resignFirstResponder()
+        }
+        return true
+    }
 }
