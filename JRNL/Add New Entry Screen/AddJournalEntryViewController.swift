@@ -13,16 +13,18 @@ class AddJournalEntryViewController: UIViewController, UITextFieldDelegate, UITe
     @IBOutlet var bodyTextView: UITextView!
     @IBOutlet var photoImageView: UIImageView!
     
+    @IBOutlet var saveButton: UIBarButtonItem!
+    
     var newJournalEntry: JournalEntry?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         titleTextField.delegate = self
         bodyTextView.delegate = self
-        // Do any additional setup after loading the view.
+        updateSaveButtonState()
     }
     
-
+    
     
     // MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -37,18 +39,34 @@ class AddJournalEntryViewController: UIViewController, UITextFieldDelegate, UITe
                                        body: body, photo: photo)
     }
 
-    // MARK: -UITextFieldDelegate
+    // MARK: - UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        updateSaveButtonState()
+    }
+    
     // MARK: - UITextViewDelegate
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange,
                   replacementText text: String) -> Bool {
+        print("text: \(range.description) \(text)")
         if(text == "\n") {
             textView.resignFirstResponder()
         }
         return true
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        updateSaveButtonState()
+    }
+    
+    // MARK: - Methods
+    private func updateSaveButtonState() {
+        let textFieldText = titleTextField.text ?? ""
+        let textViewText = bodyTextView.text ?? ""
+        saveButton.isEnabled = !textFieldText.isEmpty && !textViewText.isEmpty
     }
 }
