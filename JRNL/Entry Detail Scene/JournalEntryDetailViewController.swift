@@ -13,6 +13,7 @@ class JournalEntryDetailViewController: UITableViewController {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var bodyTextView: UITextView!
     @IBOutlet var photoImageView: UIImageView!
+    
     var selectedJournalEntry: JournalEntry?
 
     override func viewDidLoad() {
