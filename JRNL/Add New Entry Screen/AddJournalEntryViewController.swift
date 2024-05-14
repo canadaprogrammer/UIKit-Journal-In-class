@@ -6,21 +6,31 @@
 //
 
 import UIKit
+import CoreLocation
 
-class AddJournalEntryViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
+class AddJournalEntryViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, CLLocationManagerDelegate {
 
     @IBOutlet var titleTextField: UITextField!
     @IBOutlet var bodyTextView: UITextView!
     @IBOutlet var photoImageView: UIImageView!
     @IBOutlet var saveButton: UIBarButtonItem!
     
+    @IBOutlet var getLocationSwitch: UISwitch!
+    @IBOutlet var getLocationSwitchLabel: UILabel!
+    
+    
     var newJournalEntry: JournalEntry?
+    let locationManager = CLLocationManager()
+    var currentLocation: CLLocation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         titleTextField.delegate = self
         bodyTextView.delegate = self
         updateSaveButtonState()
+        
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
     }
     
     
