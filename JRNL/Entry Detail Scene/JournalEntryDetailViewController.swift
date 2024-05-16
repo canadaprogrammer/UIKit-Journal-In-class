@@ -14,20 +14,18 @@ class JournalEntryDetailViewController: UITableViewController {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var bodyTextView: UITextView!
     @IBOutlet var photoImageView: UIImageView!
-    
     @IBOutlet var mapImageView: UIImageView!
+    
+    @IBOutlet var ratingView: RatingView!
     
     var selectedJournalEntry: JournalEntry?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        dateLabel.text = selectedJournalEntry?.date.formatted(
-//            .dateTime.year().month(.wide).day()
-//        )
         dateLabel.text = selectedJournalEntry?.dateString
+        ratingView.rating = selectedJournalEntry?.rating ?? 0
         titleLabel.text = selectedJournalEntry?.entryTitle
         bodyTextView.text = selectedJournalEntry?.entryBody
-//        photoImageView.image = selectedJournalEntry?.photo
         if let photoData = selectedJournalEntry?.photoData {
             photoImageView.image = UIImage(data: photoData)
         }

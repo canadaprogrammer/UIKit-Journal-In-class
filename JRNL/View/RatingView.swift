@@ -8,7 +8,7 @@
 import UIKit
 
 class RatingView: UIStackView {
-    private var ratingButtons = [UIButton()]
+    private var ratingButtons: [UIButton] = []
     var rating = 0 {
         // 업데이트될 때마다 실행하기 위해 변수에 property observer 추가
         didSet {
