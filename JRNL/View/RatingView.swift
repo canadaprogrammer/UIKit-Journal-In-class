@@ -26,7 +26,7 @@ class RatingView: UIStackView {
     
     // MARK: - Private Methods
     private func setupButtons() {
-        // 우선 buttons 를 지움
+        // 우선 buttons 를 지움. 기존 버튼 제거
         for button in ratingButtons {
             // 어딘가 메모리에 남아있을 수 있다.
             removeArrangedSubview(button)
@@ -44,6 +44,7 @@ class RatingView: UIStackView {
             let button = UIButton()
             button.setImage(emptyStar, for: .normal)
             button.setImage(filledStar, for: .selected)
+            // default 상태에서의 하이라이트
             button.setImage(highlightedStar, for: .highlighted)
             // selected 상태에서의 하이라이트
             button.setImage(highlightedStar, for: [.highlighted, .selected])
@@ -72,9 +73,11 @@ class RatingView: UIStackView {
         }
     }
     // 이벤트에 걸리기 위해 object-c 사용
+    // 런타임함수 시그니처가 필요해서 object-c 함수 사용
     // 버튼 눌릴 때 이벤트 생성
     @objc func ratingButtonTapped(button: UIButton) {
         //버튼을 눌렀을 때 인덱스
+        // 해당버튼이 몇 번째 버튼인지 확인
         guard let index = ratingButtons.firstIndex(of: button) else {
             fatalError("The button, \(button), is not in the ratingButtons array: \(ratingButtons)")
         }
