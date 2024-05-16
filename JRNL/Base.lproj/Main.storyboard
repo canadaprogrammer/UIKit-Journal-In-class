@@ -108,9 +108,8 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="19o-9D-zq6">
                                 <rect key="frame" x="20" y="76" width="335" height="469"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rU2-4e-gSH">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="rU2-4e-gSH" customClass="RatingView" customModule="JRNL" customModuleProvider="target">
                                         <rect key="frame" x="41.5" y="0.0" width="252" height="44"/>
-                                        <color key="backgroundColor" systemColor="systemCyanColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="252" id="55D-Ej-imZ"/>
                                             <constraint firstAttribute="height" constant="44" id="eOa-wn-lXM"/>
@@ -187,6 +186,7 @@
                         <outlet property="getLocationSwitch" destination="VfN-0g-PgM" id="Koq-X8-H2K"/>
                         <outlet property="getLocationSwitchLabel" destination="3jV-c7-3nO" id="9Ck-kS-2u1"/>
                         <outlet property="photoImageView" destination="ADd-JN-K3G" id="EvY-RO-0ZY"/>
+                        <outlet property="ratingView" destination="rU2-4e-gSH" id="TYC-Fr-7hw"/>
                         <outlet property="saveButton" destination="Bic-hn-tmc" id="8Jr-mx-wbd"/>
                         <outlet property="titleTextField" destination="y5x-lU-8LG" id="vZx-L6-v6e"/>
                     </connections>
@@ -354,7 +354,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="316"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="map" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="A1W-Rw-cTq">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="map" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="A1W-Rw-cTq">
                                                     <rect key="frame" x="37.5" y="8.5" width="300" height="298.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="300" id="0qa-30-7sT"/>
@@ -487,7 +487,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemCyanColor">
-            <color red="0.1960784314" green="0.67843137249999996" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
