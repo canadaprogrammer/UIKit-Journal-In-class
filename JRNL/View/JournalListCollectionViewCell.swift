@@ -7,7 +7,7 @@
 
 import UIKit
 
-class JournalListTableViewCell: UITableViewCell {
+class JournalListCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var photoImageView: UIImageView!
     @IBOutlet var dateLabel: UILabel!
@@ -17,11 +17,4 @@ class JournalListTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

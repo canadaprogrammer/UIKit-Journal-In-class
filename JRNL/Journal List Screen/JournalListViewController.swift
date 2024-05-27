@@ -7,9 +7,9 @@
 
 import UIKit
 
-class JournalListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
+class JournalListViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchResultsUpdating {
     // MARK: - Properties
-    @IBOutlet var tableView: UITableView!
+    @IBOutlet var collectionView: UICollectionView!
     let search = UISearchController(searchResultsController: nil)
     var filteredTableData: [JournalEntry] = []
     
@@ -23,8 +23,8 @@ class JournalListViewController: UIViewController, UITableViewDataSource, UITabl
         navigationItem.searchController = search
     }
 
-    // MARK: - UITableViewDataSource
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    // MARK: - UICollectionViewDataSource
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if search.isActive {
             return self.filteredTableData.count
         } else {
@@ -32,9 +32,8 @@ class JournalListViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let journalCell = tableView.dequeueReusableCell(withIdentifier: "journalCell", for: indexPath) as! JournalListTableViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let journalCell = collectionView.dequeueReusableCell(withReuseIdentifier: "journalCell", for: indexPath) as! JournalListCollectionViewCell
         
         let journalEntry: JournalEntry
         if self.search.isActive {
@@ -50,19 +49,24 @@ class JournalListViewController: UIViewController, UITableViewDataSource, UITabl
         return journalCell
     }
     
-    // MARK: - UITableViewDelegate
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            if self.search.isActive {
-                let selectedJournalEntry = filteredTableData[indexPath.row]
-                filteredTableData.remove(at: indexPath.row)
-                SharedData.shared.removeSelectedJournalEntry(selectedJournalEntry)
-            } else {
-                SharedData.shared.removeJournalEntry(index: indexPath.row)
+    // MARK: - UICollectionViewDelegate
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        // item button 을 long press 해서 팝업이 뜨면 나오는 메뉴를 구성
+        let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (elements) -> UIMenu? in
+            let delete = UIAction(title: "Delete") { [weak self] (action) in
+                if let search = self?.search, search.isActive,
+                   let selectedJournalEntry = self?.filteredTableData[indexPath.row] {
+                    self?.filteredTableData.remove(at: indexPath.row)
+                    SharedData.shared.removeSelectedJournalEntry(selectedJournalEntry)
+                } else {
+                    SharedData.shared.removeJournalEntry(index: indexPath.row)
+                }
+                SharedData.shared.saveJournalEntriesData()
+                collectionView.reloadData()
             }
-            SharedData.shared.saveJournalEntriesData()
-            tableView.reloadData()
+            return UIMenu(title: "", image: nil, identifier: nil, options: [], children: [delete])
         }
+        return config
     }
     
     // MARK: - UISearchResultsUpdating
@@ -70,15 +74,10 @@ class JournalListViewController: UIViewController, UITableViewDataSource, UITabl
         guard let searchBarText = searchController.searchBar.text else { return }
         
         filteredTableData.removeAll()
-//        for journalEntry in SharedData.shared.getAllJournalEntries() {
-//            if journalEntry.entryTitle.lowercased().contains(searchBarText.lowercased()) {
-//                filteredTableData.append(journalEntry)
-//            }
-//        }
         filteredTableData = SharedData.shared.getAllJournalEntries().filter { journalEntry in
             journalEntry.entryTitle.lowercased().contains(searchBarText.lowercased())
         }
-        self.tableView.reloadData()
+        self.collectionView.reloadData()
     }
     
     // MARK: - Methods
@@ -90,7 +89,7 @@ class JournalListViewController: UIViewController, UITableViewDataSource, UITabl
            let newJournalEntry = sourceViewController.newJournalEntry {
             SharedData.shared.addJournalEntry(newJournalEntry: newJournalEntry)
             SharedData.shared.saveJournalEntriesData()
-            tableView.reloadData()
+            collectionView.reloadData()
         } else {
             print("No Entry or Controller")
         }
@@ -105,8 +104,8 @@ class JournalListViewController: UIViewController, UITableViewDataSource, UITabl
             return
         }
         guard let journalEntryDetailViewController = segue.destination as? JournalEntryDetailViewController,
-              let selectedJournalEntryCell = sender as? JournalListTableViewCell,
-              let indexPath = tableView.indexPath(for: selectedJournalEntryCell) else {
+              let selectedJournalEntryCell = sender as? JournalListCollectionViewCell,
+              let indexPath = collectionView.indexPath(for: selectedJournalEntryCell) else {
             fatalError("Could not get indexPath")
         }
         let selectedJournalEntry: JournalEntry
