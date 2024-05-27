@@ -37,6 +37,12 @@ class SharedData {
         journalEntries.remove(at: index)
     }
     
+    func removeSelectedJournalEntry(_ selectedJournalEntry: JournalEntry) {
+        journalEntries.removeAll {
+            $0.key == selectedJournalEntry.key
+        }
+    }
+    
     func getDocumentDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
