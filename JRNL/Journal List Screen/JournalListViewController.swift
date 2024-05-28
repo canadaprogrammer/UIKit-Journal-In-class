@@ -16,13 +16,27 @@ class JournalListViewController: UIViewController, UICollectionViewDataSource, U
     override func viewDidLoad() {
         super.viewDidLoad()
         SharedData.shared.loadJournalEntriesData()
-        
+        setupCollectionView()
         search.searchResultsUpdater = self
         search.obscuresBackgroundDuringPresentation = false
         search.searchBar.placeholder = "Search titles"
         navigationItem.searchController = search
     }
 
+    // 회전할때 사이즈를 재설정
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
+    
+    func setupCollectionView() {
+        // 초기값을 주기 위해
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.minimumLineSpacing = 10
+        collectionView.collectionViewLayout = flowLayout
+    }
     // MARK: - UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if search.isActive {
@@ -55,11 +69,11 @@ class JournalListViewController: UIViewController, UICollectionViewDataSource, U
         let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (elements) -> UIMenu? in
             let delete = UIAction(title: "Delete") { [weak self] (action) in
                 if let search = self?.search, search.isActive,
-                   let selectedJournalEntry = self?.filteredTableData[indexPath.row] {
-                    self?.filteredTableData.remove(at: indexPath.row)
+                   let selectedJournalEntry = self?.filteredTableData[indexPath.item] {
+                    self?.filteredTableData.remove(at: indexPath.item)
                     SharedData.shared.removeSelectedJournalEntry(selectedJournalEntry)
                 } else {
-                    SharedData.shared.removeJournalEntry(index: indexPath.row)
+                    SharedData.shared.removeJournalEntry(index: indexPath.item)
                 }
                 SharedData.shared.saveJournalEntriesData()
                 collectionView.reloadData()
@@ -68,7 +82,23 @@ class JournalListViewController: UIViewController, UICollectionViewDataSource, U
         }
         return config
     }
-    
+    // 아이템의 크기를 동적으로 계산
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        var columns: CGFloat
+        // 가로축 사이즈 체크
+        if (traitCollection.horizontalSizeClass == .compact) {
+            columns = 1
+        } else {
+            columns = 2
+        }
+        let viewWidth = collectionView.frame.width
+        let inset = 10.0 // padding
+        let contentWidth = viewWidth - inset * (columns + 1)
+        let cellWidth = contentWidth / columns
+        let cellHeight = 90.0
+        return CGSize(width: cellWidth, height: cellHeight)
+        
+    }
     // MARK: - UISearchResultsUpdating
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchBarText = searchController.searchBar.text else { return }
