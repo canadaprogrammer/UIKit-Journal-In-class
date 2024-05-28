@@ -6,16 +6,28 @@
 //
 
 import UIKit
+import SwiftData
 
 class JournalListViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchResultsUpdating {
     // MARK: - Properties
     @IBOutlet var collectionView: UICollectionView!
     let search = UISearchController(searchResultsController: nil)
+    var journalEntries: [JournalEntry] = []
     var filteredTableData: [JournalEntry] = []
+    var container: ModelContainer?
+    var context: ModelContext?
+    let descriptor = FetchDescriptor<JournalEntry>(sortBy: [SortDescriptor<JournalEntry>(\.dateString)])
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        SharedData.shared.loadJournalEntriesData()
+//        SharedData.shared.loadJournalEntriesData()
+        guard let _container = try? ModelContainer(for: JournalEntry.self) else {
+            fatalError("Could not initialize Container")
+        }
+        container = _container
+        context = ModelContext(_container)
+        fetchJournalEntries()
+        
         setupCollectionView()
         search.searchResultsUpdater = self
         search.obscuresBackgroundDuringPresentation = false
@@ -42,7 +54,8 @@ class JournalListViewController: UIViewController, UICollectionViewDataSource, U
         if search.isActive {
             return self.filteredTableData.count
         } else {
-            return SharedData.shared.numberOfJournalEntries()
+//            return SharedData.shared.numberOfJournalEntries()
+            return self.journalEntries.count
         }
     }
     
@@ -53,7 +66,8 @@ class JournalListViewController: UIViewController, UICollectionViewDataSource, U
         if self.search.isActive {
             journalEntry = filteredTableData[indexPath.row]
         } else {
-            journalEntry = SharedData.shared.getJournalEntry(index: indexPath.row)
+//            journalEntry = SharedData.shared.getJournalEntry(index: indexPath.row)
+            journalEntry = journalEntries[indexPath.row]
         }
         if let photoData = journalEntry.photoData {
             journalCell.photoImageView.image = UIImage(data: photoData)
@@ -71,11 +85,16 @@ class JournalListViewController: UIViewController, UICollectionViewDataSource, U
                 if let search = self?.search, search.isActive,
                    let selectedJournalEntry = self?.filteredTableData[indexPath.item] {
                     self?.filteredTableData.remove(at: indexPath.item)
-                    SharedData.shared.removeSelectedJournalEntry(selectedJournalEntry)
+//                    SharedData.shared.removeSelectedJournalEntry(selectedJournalEntry)
+                    self?.context?.delete(selectedJournalEntry)
                 } else {
-                    SharedData.shared.removeJournalEntry(index: indexPath.item)
+//                    SharedData.shared.removeJournalEntry(index: indexPath.item)
+                    if let selectedJournalEntry = self?.journalEntries[indexPath.item] {
+                        self?.journalEntries.remove(at: indexPath.item)
+                        self?.context?.delete(selectedJournalEntry)
+                    }
                 }
-                SharedData.shared.saveJournalEntriesData()
+//                SharedData.shared.saveJournalEntriesData()
                 collectionView.reloadData()
             }
             return UIMenu(title: "", image: nil, identifier: nil, options: [], children: [delete])
@@ -104,21 +123,31 @@ class JournalListViewController: UIViewController, UICollectionViewDataSource, U
         guard let searchBarText = searchController.searchBar.text else { return }
         
         filteredTableData.removeAll()
-        filteredTableData = SharedData.shared.getAllJournalEntries().filter { journalEntry in
+//        filteredTableData = SharedData.shared.getAllJournalEntries().filter { journalEntry in
+        filteredTableData = journalEntries.filter { journalEntry in
             journalEntry.entryTitle.lowercased().contains(searchBarText.lowercased())
         }
         self.collectionView.reloadData()
     }
     
     // MARK: - Methods
+    func fetchJournalEntries() {
+        if let journalEntries = try? context?.fetch(descriptor) {
+            self.journalEntries = journalEntries
+        }
+    }
+    
     @IBAction func unwindNewEntryCancel(segue: UIStoryboardSegue) {
         
     }
     @IBAction func unwindNewEntrySave(segue: UIStoryboardSegue) {
         if let sourceViewController = segue.source as? AddJournalEntryViewController,
            let newJournalEntry = sourceViewController.newJournalEntry {
-            SharedData.shared.addJournalEntry(newJournalEntry: newJournalEntry)
-            SharedData.shared.saveJournalEntriesData()
+//            SharedData.shared.addJournalEntry(newJournalEntry: newJournalEntry)
+//            SharedData.shared.saveJournalEntriesData()
+            self.context?.insert(newJournalEntry)
+//            self.search.searchBar.isHidden = false
+            fetchJournalEntries()
             collectionView.reloadData()
         } else {
             print("No Entry or Controller")
@@ -142,7 +171,8 @@ class JournalListViewController: UIViewController, UICollectionViewDataSource, U
         if self.search.isActive {
             selectedJournalEntry = filteredTableData[indexPath.row]
         } else {
-            selectedJournalEntry = SharedData.shared.getJournalEntry(index: indexPath.row)
+//            selectedJournalEntry = SharedData.shared.getJournalEntry(index: indexPath.row)
+            selectedJournalEntry = journalEntries[indexPath.row]
         }
         journalEntryDetailViewController.selectedJournalEntry = selectedJournalEntry
     }

@@ -8,6 +8,7 @@
 import UIKit
 import CoreLocation
 import MapKit
+import SwiftData
 
 class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
@@ -15,6 +16,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     let locationManager = CLLocationManager()
 //    var sampleJournalEntryData = SampleJournalEntryData()
     var selectedJournalEntry: JournalEntry?
+    
+    var container: ModelContainer?
+    var context: ModelContext?
+    var annotations: [JournalMapAnnotation] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,12 +32,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         mapView.delegate = self
 //        sampleJournalEntryData.createSampleJournalEntryData()
+        guard let _container = try? ModelContainer(for: JournalEntry.self) else {
+            fatalError("Could not initialize Container")
+        }
+        container = _container
+        context = ModelContext(_container)
 //        mapView.addAnnotations(sampleJournalEntryData.journalEntries)
-        
     }
     
     override func viewIsAppearing(_ animated: Bool) {
         super.viewIsAppearing(animated)
+        mapView.removeAnnotations(annotations)
         locationManager.requestLocation()
     }
     
@@ -43,7 +53,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             let long = myLocation.coordinate.longitude
             self.navigationItem.title = "Map"
             mapView.region = setInitialRegion(lat: lat, long: long)
-            mapView.addAnnotations(SharedData.shared.getAllJournalEntries())
+//            mapView.addAnnotations(SharedData.shared.getAllJournalEntries())
+            let descriptor = FetchDescriptor<JournalEntry>(predicate: #Predicate { $0.latitude != nil && $0.longitude != nil})
+            guard let journalEntries = try? context?.fetch(descriptor) else {
+                return
+            }
+            annotations = journalEntries.map { JournalMapAnnotation(journal: $0) }
+            mapView.addAnnotations(annotations)
         }
     }
     
@@ -54,7 +70,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     // MARK: - MKMapViewDelegate
     func mapView(_ mapView: MKMapView, viewFor annotation: any MKAnnotation) -> MKAnnotationView? {
         let identifier = "mapAnnotation"
-        if annotation is JournalEntry {
+        if annotation is JournalMapAnnotation {
             if let annotationview = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) {
                 annotationview.annotation = annotation
                 return annotationview
@@ -73,7 +89,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         guard let annotation = mapView.selectedAnnotations.first else {
             return
         }
-        selectedJournalEntry = annotation as? JournalEntry
+        selectedJournalEntry = (annotation as? JournalMapAnnotation)?.journal
         self.performSegue(withIdentifier: "showMapDetail", sender: self)
     }
     

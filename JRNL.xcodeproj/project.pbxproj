@@ -20,6 +20,7 @@
 		3C743DB72BF587F60028DDF8 /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C743DB62BF587F60028DDF8 /* SharedData.swift */; };
 		3C743DB92BF5BE7E0028DDF8 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C743DB82BF5BE7E0028DDF8 /* RatingView.swift */; };
 		3CDB92FB2BF3287D0039D523 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDB92FA2BF3287D0039D523 /* MapViewController.swift */; };
+		3CDE95712C05982E0037E24E /* JournalMapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDE95702C05982E0037E24E /* JournalMapAnnotation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		3C743DB62BF587F60028DDF8 /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
 		3C743DB82BF5BE7E0028DDF8 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		3CDB92FA2BF3287D0039D523 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		3CDE95702C05982E0037E24E /* JournalMapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalMapAnnotation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 			children = (
 				376D26CD2BEDB8CD00B2E67B /* JournalEntry.swift */,
 				3C743DB62BF587F60028DDF8 /* SharedData.swift */,
+				3CDE95702C05982E0037E24E /* JournalMapAnnotation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 				3764AF7B2BE9F85F00A21A1B /* AppDelegate.swift in Sources */,
 				3C743DB92BF5BE7E0028DDF8 /* RatingView.swift in Sources */,
 				376D26CE2BEDB8CD00B2E67B /* JournalEntry.swift in Sources */,
+				3CDE95712C05982E0037E24E /* JournalMapAnnotation.swift in Sources */,
 				376D26D02BEDC0D500B2E67B /* JournalListCollectionViewCell.swift in Sources */,
 				3764AF7D2BE9F85F00A21A1B /* SceneDelegate.swift in Sources */,
 				376D26D62BEE01E100B2E67B /* JournalEntryDetailViewController.swift in Sources */,
